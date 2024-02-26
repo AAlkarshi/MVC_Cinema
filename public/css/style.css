@@ -1,0 +1,113 @@
+body{
+	margin: 0;
+}
+
+nav{
+	display: flex;
+	flex-direction: row;
+	background-color: #6F75F3;
+	height: 100px;
+	align-items: center;
+	text-decoration: none;
+}
+
+nav a{
+	display: flex;
+	justify-content: space-around;
+	color: black;
+	height: 60px;
+	width: 100%;
+	align-items: center;
+	font-size: 20px;
+	text-decoration: none;
+}
+
+
+#BLOCGRIS{
+	background-color: #D9D9D9;
+}
+
+#BLOCGRIS h2{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	font-size: 16px;
+	height: 50px;
+	margin: 0;
+}
+
+
+#BLOCFILM{
+	width: 100%;
+	margin: 30px 30px 30px 30px;
+}
+
+#BLOCFILM a img{
+	width: 30%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.film {
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    width: calc(25% - 40px); 
+    box-shadow: 0 2px 5px black;
+    transition: transform 0.2s ease-in-out; 
+}
+
+
+
+.film img {
+    width: 100%;
+    height: auto;
+}
+
+.film p {
+    margin: 10px;
+    text-align: center;
+}
+
+
+img{
+	width: 200px;
+	height: 200px;
+}
+
+
+.DetailCentre{
+	display: flex;
+	justify-content: center;
+	width: 100%;
+    flex-direction: row;
+}
+
+
+.IMGDetailFilm{
+	display: flex; 
+	justify-content: center; 
+	height: auto;
+    flex-direction: row;
+}
+
+
+#EnglobeDetailImage{
+	display: flex; 
+	justify-content: center; 
+	width: 100%;
+    flex-direction: row;
+}
