@@ -23,9 +23,14 @@ try {
 <nav>
     <a href="#">CinéStreaming</a>
     <a href="index.php">Films</a>
+    <a href="index.php?action=listActeurs">Acteurs</a>
+    <a href="index.php?action=listRealisateur">Réalisateurs</a>
+    <a href="index.php?action=listGenre">Genres</a>
+    <a href="index.php?action=listRole">Rôles</a>
     <input type="search" id="site-search" name="q" 
         aria-label="Rechercher sur le site" style="margin-right: 20px; height: 30px; border-radius: 5px">
 </nav>
+
 
 <!-- SECTION PRINCIPALE -->
 <section id="BLOCGRIS">
@@ -46,30 +51,45 @@ $ctrlCinema = new CinemaController();
 
 $id = (isset($_GET["id"])) ? $_GET["id"] : null;
 
-if(isset($_GET["action"])) {
-    switch ($_GET["action"]) {
-        case "listFilms" : $ctrlCinema->listFilms(); break;
-        case "detailFilm" : $ctrlCinema->detailFilm($id); break;
-        case "listActeurs" : $ctrlCinema->listActeurs(); break;
-    }
-}
-
-
-
-if (isset($_GET['action'])) {
-    $ctrlCinema = new CinemaController();
-    
-    switch ($_GET['action']) {
-        case 'listFilms':
+if (isset($_GET["action"])) {
+    $action = $_GET["action"];
+    switch ($action) {
+        case "listFilms":
             $ctrlCinema->listFilms();
             break;
-        case 'listActeurs':
-            $ctrlCinema->listActeurs();
+        case "detailFilm":
+            $ctrlCinema->detailFilm($id);
+            break;
+        case "listActeurs":
+            $ctrlCinema->listActeurs($id);
+            break;
+        case "detailActeur":
+            $ctrlCinema->detailActeur($id);
+            break;
+        case "detailRealisateur":
+            $ctrlCinema->detailRealisateur($id);
+            break;
+        case "listRealisateur":
+            $ctrlCinema->listRealisateur($id);
+            break;
+        case "detailGenre":
+            $ctrlCinema->detailGenre($id);
+            break;
+        case "listGenre":
+            $ctrlCinema->listGenre($id);
+            break;
+        case "listRole":
+            $ctrlCinema->listRole($id);
+            break;
+        case "detailRole":
+            $ctrlCinema->detailRole($id);
+            break;
+        default:
+            echo "Action inconnue.";
             break;
     }
 } else {
-    $ctrlCinema = new CinemaController();
-    $ctrlCinema->listFilms(); 
+    $ctrlCinema->listFilms();
 }
 
 

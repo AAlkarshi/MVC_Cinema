@@ -1,72 +1,48 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Détail du film</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title></title>
 </head>
 <body>
-
 <div class="container">
-    <h1 style="display: flex; justify-content: center; width: 100%;
+     <h1 style="display: flex; justify-content: center; width: 100%;
                 flex-direction: row;">Détail du film</h1>
-    
-    <div>
-        <?php
-        foreach ($requete->fetchAll() as $film) {
-            
-            $CheminImage = "public/img/".urlencode($film['Titre_Film']).".jpg";  
-            ?>
+   
+   <img class="IMGDetailFilm" src="<?= 'public/img/'.urlencode($reqDetailFilm['Titre_Film']).'.jpg'; ?>" style="display: block; margin-left: auto; margin-right: auto;">
 
-            <div>
-            <div id="EnglobeDetailImage">
-                <img class="IMGDetailFilm" src="<?= htmlspecialchars($CheminImage); ?>" alt="<?= htmlspecialchars($film['Titre_Film']); ?>" >
+    <h2 class="DetailCentre"><?= $reqDetailFilm['Titre_Film']; ?></h2>
 
-            </div>
-            <div>
-                    
-                <a class="DetailCentre" href="index.php?action=detailFilm&id=<?= htmlspecialchars($film['ID_Films']); ?>">
-                    <?= htmlspecialchars($film["Titre_Film"]); ?> 
-                </a>
-                        
-            <h1 class="DetailCentre">
-                <?= htmlspecialchars($film["Titre_Film"]); ?>
-            </h1>
-                        
-            <p class="DetailCentre" >
-                Année de sortie: <?= htmlspecialchars($film["AnneeSortieFilm"]); ?>
-            </p>
-                        
-            <p class="DetailCentre">
-                Durée: <?= htmlspecialchars($film["DureeFilm"]); ?>
-            </p>
+    <p class="DetailCentre">Année de sortie: <?= $reqDetailFilm['AnneeSortieFilm']; ?></p>
 
-            <p class="DetailCentre">
-                Note: <?= htmlspecialchars($film["Note_Film"]); ?>
-            </p>
+    <p class="DetailCentre">Durée: <?= $reqDetailFilm['DureeFilm']; ?> minutes</p>
 
-            <p class="DetailCentre">Catégorie: 
-               <?= htmlspecialchars($film["Libelle_Film_Categorie"]); ?>
-            </p>
-                        
-            <p class="DetailCentre">
-                Résumé: <?= htmlspecialchars($film["Resume_Film"]); ?></p>
+    <p class="DetailCentre">Note: <?= $reqDetailFilm['Note_Film']; ?></p>
 
 
-             <p class="DetailCentre">
-                Réalisateur: 
-                    <?= htmlspecialchars($film["Nom_Realisateur"]) . " " . htmlspecialchars($film["Prenom_Realisateur"]); ?>               
-             </p>
-             
-            </div>
-            </div>
-            <?php 
-        }
-        ?>
-    </div>
-  
-    
+<!--  CATEGORIE -->
+    <p class="DetailCentre">Catégorie: </p>  
+        <?php foreach ($filmographieFilm as $acteur): ?>
+     <p class="DetailCentre"> <?= $acteur['Libelle_Film_Categorie']; ?> </p> 
+    <?php endforeach; ?>
+        
+<!--  RESUME -->
+    <p class="DetailCentre"> <?= $reqDetailFilm['Resume_Film']; ?></p>
+
+
+
+    <h3 class="DetailCentre">Acteurs:</h3>
+    <?php  foreach ($filmographieFilm as $acteur): ?>
+        <p class="DetailCentre"> <?= $acteur['RoleJouer_Acteur']; ?> </p>
+    <?php endforeach; ?>
+
+
+    <h3 class="DetailCentre">Réalisateur: </h3>
+    <?php foreach ($filmographieFilm as $acteur): ?>
+    <p class="DetailCentre">
+        <?= $acteur['Nom_Realisateur']." ".$acteur['Prenom_Realisateur']; ?>     
+    </p>
+      <?php endforeach; ?>
+
 </div>
-
 </body>
 </html>
