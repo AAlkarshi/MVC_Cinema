@@ -20,7 +20,7 @@
 			
 				<td> <a href="index.php?action=detailFilm&id=<?= $film['ID_Films'] ?>"> <?= $film["Titre_Film"] ?></a></td>
 
-					<td> <?= $film["AnneeSortieFilm"] ?> </td>
+					<td> <?= $film["AnneeSortieFilmOrdre"] ?> </td>
 				</tr>
 			<?php } ?>
 

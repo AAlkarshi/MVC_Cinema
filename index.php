@@ -27,8 +27,11 @@ try {
     <a href="index.php?action=listRealisateur">Réalisateurs</a>
     <a href="index.php?action=listGenre">Genres</a>
     <a href="index.php?action=listRole">Rôles</a>
-    <input type="search" id="site-search" name="q" 
-        aria-label="Rechercher sur le site" style="margin-right: 20px; height: 30px; border-radius: 5px">
+    <a href="index.php?action=FormFilm">Ajout Films</a>
+    <a href="index.php?action=FormActeur">Ajout Acteurs</a>
+    <a href="index.php?action=FormRealisateur">Ajout Realisateurs</a>
+    <a href="index.php?action=FormGenre">Ajout Genre</a>
+    <a href="index.php?action=FormRole">Ajout Role</a>
 </nav>
 
 
@@ -84,9 +87,27 @@ if (isset($_GET["action"])) {
         case "detailRole":
             $ctrlCinema->detailRole($id);
             break;
+        case "FormFilm":
+            $ctrlCinema->FormFilm($id);
+        break;
+        case "FormFilm":
+            $ctrlCinema->AjoutFilm($id);
+        break;
+        case "FormActeur":
+            $ctrlCinema->FormActeur($id);
+        break;
+        case "FormRealisateur":
+            $ctrlCinema->FormRealisateur($id);
+        break;
+        case "FormGenre":
+            $ctrlCinema->FormGenre($id);
+        break;
+        case "FormRole":
+            $ctrlCinema->FormRole($id);
+        break;
         default:
             echo "Action inconnue.";
-            break;
+        break;
     }
 } else {
     $ctrlCinema->listFilms();

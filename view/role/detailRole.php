@@ -10,16 +10,16 @@
 <div class="container">
     <h1>Détail des Films selon leurs genres</h1>
 
-    <ul>
+    
         <?php foreach ($filmographieRole as $role): ?>
-            <li>
+        
+        <?= $role["Prenom_Acteur"]." ".$role["Nom_Acteur"] . " à joué le role de ".
+        $role["RoleJouer_Acteur"] ?> 
                
-                	<?= $role["RoleJouer_Acteur"] ?> 
-               
-                    <?= $role["Titre_Film"] ?>
-            </li>
+                    
+            
         <?php endforeach; ?>
-    </ul>
+
 </div>
 
 </body>
