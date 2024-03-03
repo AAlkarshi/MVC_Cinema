@@ -87,12 +87,48 @@ if (isset($_GET["action"])) {
         case "detailRole":
             $ctrlCinema->detailRole($id);
             break;
+
         case "FormFilm":
             $ctrlCinema->FormFilm($id);
         break;
-        case "FormFilm":
-            $ctrlCinema->AjoutFilm($id);
+        case "AjoutFilm":
+            $ctrlCinema->AjoutFilm();
         break;
+
+        //FORMULAIRE ACTEUR
+         case "FormActeur":
+            $ctrlCinema->FormActeur($id);
+        break;
+        case "AjoutActeur":
+            $ctrlCinema->AjoutActeur();
+        break;
+
+        //FORMULAIRE REALISATEUR
+         case "FormRealisateur":
+            $ctrlCinema->FormRealisateur($id);
+        break;
+        case "AjoutRealisateur":
+            $ctrlCinema->AjoutRealisateur();
+        break;
+
+
+        //FORMULAIRE REALISATEUR
+         case "FormRole":
+            $ctrlCinema->FormRole($id);
+        break;
+        case "AjoutRole":
+            $ctrlCinema->AjoutRole();
+        break;
+
+        //FORMULAIRE GENRE
+         case "FormGenre":
+            $ctrlCinema->FormGenre($id);
+        break;
+        case "AjoutGenre":
+            $ctrlCinema->AjoutGenre();
+        break;
+
+        
         case "FormActeur":
             $ctrlCinema->FormActeur($id);
         break;
