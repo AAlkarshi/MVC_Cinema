@@ -139,7 +139,7 @@ public function listGenre() {
     $Role = $reqRole->fetch(); 
    
     $reqListesGenres = $pdo->prepare(
-    	"SELECT Titre_Film , Nom_Acteur , Prenom_Acteur , RoleJouer_Acteur
+    	"SELECT Titre_Film , Nom_Acteur , Prenom_Acteur , RoleJouer_Acteur ,acteurs.ID_Acteur
 		FROM jouer
 		INNER JOIN films ON jouer.ID_Films = films.ID_Films
 		INNER JOIN role ON jouer.ID_Role = role.ID_Role

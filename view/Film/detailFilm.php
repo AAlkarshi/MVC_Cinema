@@ -10,7 +10,7 @@ $pdo = Connect::seConnecter();
 <div class="container">
     <h1 style="display: flex; justify-content: center; width: 100%; flex-direction: row;">Détail du film</h1>
    
-    <img class="IMGDetailFilm" src="<?= 'public/img/'.urlencode($reqDetailFilm['Titre_Film']).'.jpg'; ?>" style="display: block; margin-left: auto; margin-right: auto;">
+    <img class="IMGDetailFilm" src="<?= 'public/img/'.urlencode($reqDetailFilm['Affiche_Film']) .'.jpg'; ?>" style="display: block; margin-left: auto; margin-right: auto;">
 
     <h2 class="DetailCentre"><?= $reqDetailFilm['Titre_Film']; ?></h2>
     <p class="DetailCentre">Année de sortie: <?= $reqDetailFilm['AnneeSortieFilm']; ?></p>
@@ -18,19 +18,67 @@ $pdo = Connect::seConnecter();
     <p class="DetailCentre">Note: <?= $reqDetailFilm['Note_Film']; ?></p>
 
     <!--  CATEGORIE -->
-    <p class="DetailCentre">Catégorie: </p>  
-    <?php foreach ($filmographieFilm as $acteur): ?>
-        <p class="DetailCentre"><?= $acteur['Libelle_Film_Categorie']; ?></p> 
-    <?php endforeach; ?>
-        
+    <p class="DetailCentre">Catégorie : </p>  
+        <?php foreach ($filmographieFilm as $categorie): ?>
+            <p class="DetailCentre"> <?= $categorie['Libelle_Film_Categorie']; ?> </p> 
+            
+            <?php if ($filmographieFilm >= 1) {
+                break;
+            }
+            ?>
+
+        <?php endforeach; ?>
+         
     <!--  RESUME -->
     <p class="DetailCentre"><?= $reqDetailFilm['Resume_Film']; ?></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!--  ACTEURS -->
     <h3 class="DetailCentre">Acteurs:</h3>
     <?php foreach ($filmographieFilm as $acteur): ?>
-        <p class="DetailCentre"><?= $acteur['RoleJouer_Acteur']; ?></p>
+        <p class="DetailCentre">   <?= $acteur['Nom_Acteur'] ?>  <?= ($acteur['Prenom_Acteur']) ?> (<?=($acteur['RoleJouer_Acteur'])?>)  </p>
     <?php endforeach; ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- REALISATEUR -->
     <?php

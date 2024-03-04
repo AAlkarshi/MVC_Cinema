@@ -8,8 +8,6 @@ $pdo = Connect::seConnecter();
 ?>
 
 <div class="container">
-    <h1>Détail de l'Acteur</h1>
-    
         <div>
             <h2>Informations de l'Acteur</h2>
 
@@ -24,7 +22,6 @@ $pdo = Connect::seConnecter();
             <ul>
                 <?php foreach ($filmographie as $film): ?>
                     <li>
-
                        <a href="index.php?action=detailFilm&id=<?= $film['ID_Films'] ?>"> <?= $film["Titre_Film"] ?></a>
                         <?= $film['RoleJouer_Acteur'] ?> 
                     </li>
