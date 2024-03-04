@@ -196,7 +196,6 @@ public function AjoutActeur() {
         $PrenomActeur = $_POST['Prenom_Acteur'] ?? '';
         $SexeActeur = $_POST['Sexe_Acteur'] ?? '';
         $DateNaissanceActeur = $_POST['DateNaissance_Acteur'] ?? ''; 
-       
 
         $reqAjoutActeur = $pdo->prepare("INSERT INTO acteurs 
             (Nom_Acteur, Prenom_Acteur, Sexe_Acteur, DateNaissance_Acteur)
