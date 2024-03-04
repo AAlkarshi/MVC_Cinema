@@ -1,9 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+<?php
+ob_start();
+
+require_once 'model/Connect.php'; 
+use Model\Connect;
+
+$pdo = Connect::seConnecter();
+?>
+    
 <div class="container">
     <h1 style="display: flex; justify-content: center; width: 100%; flex-direction: row;">Détail du film</h1>
    
@@ -44,5 +47,10 @@
     endforeach;
     ?>
 </div>
-</body>
-</html>
+
+<?php
+$titre = "Detail du Film";
+$titre_secondaire = "Detail du Film";
+$contenu = ob_get_clean();
+require "view/template.php";
+?>

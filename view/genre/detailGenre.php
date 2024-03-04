@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Détail des Genres</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+<?php
+ob_start();
+
+require_once 'model/Connect.php'; 
+use Model\Connect;
+
+$pdo = Connect::seConnecter();
+?>
 
 <div class="container">
     <h1>Détail des Films selon leurs genres</h1>
@@ -29,5 +29,9 @@
     </ul>
 </div>
 
-</body>
-</html>
+<?php
+$titre = "Detail du Genre";
+$titre_secondaire = "Detail de Genre de Film";
+$contenu = ob_get_clean();
+require "view/template.php";
+?>

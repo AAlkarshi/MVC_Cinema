@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Détail du Réalisateur</title>
-</head>
-<body>
+<?php
+ob_start();
+
+require_once 'model/Connect.php'; 
+use Model\Connect;
+
+$pdo = Connect::seConnecter();
+?>
     <div>
         <h1>Informations du Réalisateur</h1>
         <p>Nom: <?= $infosRealisateur['Nom_Realisateur'] ?></p>
@@ -21,13 +22,14 @@
                     
                     (<?= $film['AnneeSortieFilmTrie'] ?>)
                 </li>
-                
 
-                
-                
-               
             <?php endforeach; ?>
         </ul>
     </div>
-</body>
-</html>
+
+<?php
+$titre = "Detail concernant le Realisateur";
+$titre_secondaire = "Detail concernant le realisateur";
+$contenu = ob_get_clean();
+require "view/template.php";
+?>

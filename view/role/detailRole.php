@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Détail des Genres</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+<?php
+ob_start();
+
+require_once 'model/Connect.php'; 
+use Model\Connect;
+
+$pdo = Connect::seConnecter();
+?>
 
 <div class="container">
     <h1>Détail des Films selon leurs genres</h1>
@@ -16,17 +16,16 @@
         <?= $role["Prenom_Acteur"]." ".$role["Nom_Acteur"] . " à joué le role de ".
         $role["RoleJouer_Acteur"] ?> 
                
-                    
-            
         <?php endforeach; ?>
 
 </div>
 
-</body>
-</html>
-
-
-
+<?php
+$titre = "Detail du Role";
+$titre_secondaire = "Detail du Role";
+$contenu = ob_get_clean();
+require "view/template.php";
+?>
 
 
 

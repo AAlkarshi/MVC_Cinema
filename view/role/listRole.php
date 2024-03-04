@@ -6,33 +6,20 @@ use Model\Connect;
 
 $pdo = Connect::seConnecter();
 
-$listRole = $pdo->query("SELECT * FROM role");
-
-echo "<p> Il y a " . $listRole->rowCount() . " Roles </p>";
-
+echo "<p> Il y a " . count($listRole) . " Roles </p>"; 
 echo "<ul>";
-foreach ($listRole->fetchAll() as $role) {
+foreach ($listRole as $role) {
     echo "<li>
     		<a href='index.php?action=detailRole&id=" . 
-    			$role['ID_Role']."'>".
-    			$role['RoleJouer_Acteur'] .
-    		"</a>
-    	</li>";
+			    $role['ID_Role'] . "'>" . 
+			    $role['RoleJouer_Acteur'] . 
+   	 		"</a>
+   	 	</li>";
 }
 echo "</ul>";
 
-
-$titre = "Nom du Role";
-$titre_secondaire = "Liste des Acteurs ayant jouer ce role";
+$titre = "Listes des Rôles";
+$titre_secondaire = "Liste des Acteurs ayant joué ce rôle";
 $contenu = ob_get_clean();
 require "view/template.php";
-
 ?>
-
-
-
-
-
-
-
-

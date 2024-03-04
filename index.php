@@ -1,47 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>CinéStreaming</title>
-    <link rel="stylesheet" type="text/css" href="public/css/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title> <?= $titre ?>  </title>
-</head>
-<body>
-
-
 <?php
-try {
-    $mysqlClient = new PDO('mysql:host=localhost;dbname=cinema;charset=utf8', 'root', '');
-} catch (Exception $e) {
-    die('Erreur : ' . $e->getMessage());
-}
+ob_start();
 
+require_once 'model/Connect.php'; 
+use Model\Connect;
 
-?>
-
-<!-- SECTION NAVIGATION -->
-<nav>
-    <a href="#">CinéStreaming</a>
-    <a href="index.php">Films</a>
-    <a href="index.php?action=listActeurs">Acteurs</a>
-    <a href="index.php?action=listRealisateur">Réalisateurs</a>
-    <a href="index.php?action=listGenre">Genres</a>
-    <a href="index.php?action=listRole">Rôles</a>
-    <a href="index.php?action=FormFilm">Ajout Films</a>
-    <a href="index.php?action=FormActeur">Ajout Acteurs</a>
-    <a href="index.php?action=FormRealisateur">Ajout Realisateurs</a>
-    <a href="index.php?action=FormGenre">Ajout Genre</a>
-    <a href="index.php?action=FormRole">Ajout Role</a>
-</nav>
-
-
-<!-- SECTION PRINCIPALE -->
-<section id="BLOCGRIS">
-    <h2> LES MEILLEURS FILMS </h2>
-</section>
-
-<?php
-
+$pdo = Connect::seConnecter();
 
 use Controller\CinemaController;
 
@@ -89,7 +52,7 @@ if (isset($_GET["action"])) {
             break;
 
         case "FormFilm":
-            $ctrlCinema->FormFilm($id);
+            $ctrlCinema->AjoutFilm($id);
         break;
         case "AjoutFilm":
             $ctrlCinema->AjoutFilm();
@@ -97,7 +60,7 @@ if (isset($_GET["action"])) {
 
         //FORMULAIRE ACTEUR
          case "FormActeur":
-            $ctrlCinema->FormActeur($id);
+            $ctrlCinema->AjoutActeur($id);
         break;
         case "AjoutActeur":
             $ctrlCinema->AjoutActeur();
@@ -105,7 +68,7 @@ if (isset($_GET["action"])) {
 
         //FORMULAIRE REALISATEUR
          case "FormRealisateur":
-            $ctrlCinema->FormRealisateur($id);
+            $ctrlCinema->AjoutRealisateur($id);
         break;
         case "AjoutRealisateur":
             $ctrlCinema->AjoutRealisateur();
@@ -114,7 +77,7 @@ if (isset($_GET["action"])) {
 
         //FORMULAIRE REALISATEUR
          case "FormRole":
-            $ctrlCinema->FormRole($id);
+            $ctrlCinema->AjoutRole($id);
         break;
         case "AjoutRole":
             $ctrlCinema->AjoutRole();
@@ -122,7 +85,7 @@ if (isset($_GET["action"])) {
 
         //FORMULAIRE GENRE
          case "FormGenre":
-            $ctrlCinema->FormGenre($id);
+            $ctrlCinema->AjoutGenre($id);
         break;
         case "AjoutGenre":
             $ctrlCinema->AjoutGenre();
@@ -150,26 +113,7 @@ if (isset($_GET["action"])) {
 }
 
 
-
-
 ?>
-
-
-
-
-
-
-
-
-</body>
-</html>
-
-
-
-
-
-
-
 
 
 

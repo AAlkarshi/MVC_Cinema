@@ -3,7 +3,6 @@
 namespace Controller;
 use Model\Connect;
 
-
 class CinemaController {
 	// Affiche ID FILM , TITRE ET DATE DE SORTIE
 	public function listFilms() {
@@ -14,20 +13,6 @@ class CinemaController {
         ORDER BY AnneeSortieFilmOrdre DESC");
 		require "view/film/listFilms.php";
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //DETAIL ACTEUR
@@ -46,32 +31,6 @@ public function detailActeur($id) {
     require "view/acteur/detailActeur.php";
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //DETAIL LISTE ACTEURS
 public function listActeurs() {
     $pdo = Connect::seConnecter();
@@ -79,10 +38,6 @@ public function listActeurs() {
     $acteurs = $requete->fetchAll();
     require "view/acteur/listActeurs.php";
 }
-
-
-
-
 
 
 // DETAIL FILM   JUSTE
@@ -113,21 +68,6 @@ public function listActeurs() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // DETAIL REALISATEUR
 public function detailRealisateur($id) {
     $pdo = Connect::seConnecter();
@@ -153,36 +93,13 @@ public function detailRealisateur($id) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //DETAIL LISTE REALISATEUR
 public function listRealisateur() {
     $pdo = Connect::seConnecter();
-    $requeteListRealisateur = $pdo->query("SELECT Nom_Realisateur,Prenom_Realisateur FROM realisateur");
+    $requeteListRealisateur = $pdo->query("SELECT ID_Realisateur, Nom_Realisateur, Prenom_Realisateur FROM realisateur");
     $realisateurList = $requeteListRealisateur->fetchAll(); 
     require "view/realisateur/listRealisateur.php";
 }
-
-
-
 
 
 // DETAIL GENRE
@@ -204,43 +121,13 @@ public function detailGenre($id) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //LISTE GENRE
 public function listGenre() {
     $pdo = Connect::seConnecter();
-    $requeteListGenre = $pdo->query("SELECT Libelle_Film_Categorie FROM categorie");
+    $requeteListGenre = $pdo->query("SELECT ID_Categorie, Libelle_Film_Categorie FROM categorie");
     $ListGenre = $requeteListGenre->fetchAll(); 
     require "view/genre/listGenre.php";
 }
-
-
-
-
-
-
 
 
 // DETAIL ROLE
@@ -264,52 +151,15 @@ public function listGenre() {
 }
 
 
-
-
-
-//LISTE GENRE
+//LISTE ROLE
 public function listRole() {
-	    $pdo = Connect::seConnecter();
-	    $requeteListRole = $pdo->prepare("SELECT RoleJouer_Acteur FROM Role");
-	    $listRole = $requeteListRole->fetchAll(); 
-	    require "view/role/listRole.php";
-}
-
-
-
-
-
-
-//FORMULAIRE FILM
-public function FormFilm() {
     $pdo = Connect::seConnecter();
-    echo '
-    <h1>Ajouter un nouveau film</h1>
-    <form action="index.php?action=AjoutFilm" method="post">
-        <label for="Titre_Film">Titre:</label>
-        <input type="text" id="Titre_Film" name="Titre_Film" required placeholder="Taper le Nom du Film"><br>
-
-        <label for="AnneeSortieFilm">Date de sortie:</label>
-        <input type="int" id="AnneeSortieFilm" name="AnneeSortieFilm" required placeholder="Annee uniquement"><br>
-
-        <label for="DureeFilm">Duree du film:</label>
-        <input type="int" id="DureeFilm" name="DureeFilm" required placeholder="En Minutes"> <br>
-
-        <label for="Resume_Film">Resume :</label>
-        <input type="text" id="Resume_Film" name="Resume_Film" required placeholder="Ajouter un résumé"><br>
-
-        <label for="Note_Film">Note du Film :</label>
-        <input type="int" id="Note_Film" name="Note_Film" required placeholder="Note du film sur 5"><br>
-
-        <label for="Affiche_Film">Description de affiche du film :</label>
-        <input type="text" id="Affiche_Film" name="Affiche_Film" required placeholder="Ajouter une description"><br>
-
-        <label for="ID_Realisateur">Realisateur:</label>
-        <input type="int" id="ID_Realisateur" name="ID_Realisateur" required><br>
-
-        <input type="submit" value="Ajouter le film">
-    </form> ';
+    $requeteListRole = $pdo->prepare("SELECT ID_Role, RoleJouer_Acteur FROM Role");
+    $requeteListRole->execute(); 
+    $listRole = $requeteListRole->fetchAll(); 
+    require "view/role/listRole.php";
 }
+
 
 //AJOUT FILM
 public function AjoutFilm() {
@@ -324,42 +174,19 @@ public function AjoutFilm() {
         $ID_Realisateur = $_POST['ID_Realisateur'] ?? '';
 
         $reqAjoutFilm = $pdo->prepare("INSERT INTO films 
-            (Titre_Film, AnneeSortieFilm, DureeFilm, Resume_Film, Note_Film, Affiche_Film, ID_Realisateur)
+            (Titre_Film, AnneeSortieFilm, DureeFilm, Resume_Film, 
+            Note_Film, Affiche_Film, ID_Realisateur)
         VALUES (?, ?, ?, ?, ?, ?, ?)");
 
         $reqAjoutFilm->execute([
-            $TitreFilm, $AnneeSortieFilm,$DureeFilm,$ResumeFilm, $NoteFilm, $AfficheFilm, $ID_Realisateur
+            $TitreFilm, $AnneeSortieFilm,$DureeFilm,$ResumeFilm, 
+            $NoteFilm, $AfficheFilm, $ID_Realisateur
         ]);
-        
         echo "Film ajouté avec succès !";
-    } else {
-        echo "Non Ajouté ! Erreur dans l'ajout du film !";
-    }
+    } 
+    require "view/film/FormFilm.php";
 }
 
-
-
-//FORMULAIRE ACTEUR
-public function FormActeur() {
-    $pdo = Connect::seConnecter();
-    echo '
-    <h1>Ajouter un nouvel Acteur</h1>
-    <form action="index.php?action=AjoutActeur" method="post">
-        <label for="Nom_Acteur">Nom de Acteur : </label>
-        <input type="text" id="Nom_Acteur" name="Nom_Acteur" required placeholder="Taper le Nom de Acteur"><br>
-
-        <label for="Prenom_Acteur">Prenom de Acteur:</label>
-        <input type="text" id="Prenom_Acteur" name="Prenom_Acteur" required placeholder="Taper le Prenom de Acteur"><br>
-
-        <label for="Sexe_Acteur">Genre de Acteur:</label>
-        <input type="text" id="Sexe_Acteur" name="Sexe_Acteur" required placeholder="Taper le Sexe de Acteur"><br>
-
-        <label for="DateNaissance_Acteur">Date de Naissance :</label>
-        <input type="date" id="DateNaissance_Acteur" name="DateNaissance_Acteur" required><br>
-
-        <input type="submit" value="Ajouter Acteur">
-    </form> ';
-}
 
 //AJOUT ACTEUR
 public function AjoutActeur() {
@@ -377,34 +204,10 @@ public function AjoutActeur() {
 
         $reqAjoutActeur->execute([$NomActeur, $PrenomActeur,$SexeActeur,$DateNaissanceActeur]);
         echo "Acteur ajouté avec succès !";
-    } else {
-        echo "Acteur NON AJOUTER ! Erreur dans l'ajout de l'acteur !";
-    }
+    } 
+    require "view/acteur/FormActeur.php"; 
 }
 
-
-
-//FORMULAIRE REALISATEUR
-public function FormRealisateur() {
-    $pdo = Connect::seConnecter();
-    echo '
-    <h1>Ajouter un nouvel Realisateur</h1>
-    <form action="index.php?action=AjoutRealisateur" method="post">
-        <label for="Nom_Realisateur">Nom du Réalisateur : </label>
-        <input type="text" id="Nom_Realisateur" name="Nom_Realisateur" required placeholder="Taper le nom du Réalisateur"><br>
-
-        <label for="Prenom_Realisateur">Prenom du Réalisateur:</label>
-        <input type="text" id="Prenom_Realisateur" name="Prenom_Realisateur" required placeholder="Taper le Prenom du Réalisateur"><br>
-
-        <label for="Sexe_Realisateur">Genre du Realisateur:</label>
-        <input type="text" id="Sexe_Realisateur" name="Sexe_Realisateur" required placeholder="Taper le Sexe du Realisateur"><br>
-
-        <label for="DateNaissance_Realisateur">Date de Naissance :</label>
-        <input type="date" id="DateNaissance_Realisateur" name="DateNaissance_Realisateur" required><br>
-
-        <input type="submit" value="Ajouter Realisateur">
-    </form> ';
-}
 
 //AJOUT ACTEUR
 public function AjoutRealisateur() {
@@ -423,28 +226,10 @@ public function AjoutRealisateur() {
         $reqAjoutRealisateur->execute([$NomRealisateur, $PrenomRealisateur,$SexeRealisateur,
             $DateNaissanceRealisateur]);
         echo "Realisateur ajouté avec succès !";
-    } else {
-        echo "Realisateur NON AJOUTER ! Erreur dans l'ajout du Realisateur !";
     }
+    require "view/realisateur/FormRealisateur.php"; 
 }
 
-
-
-
-
-
-
-//FORMULAIRE ROLE
-public function FormRole() {
-    $pdo = Connect::seConnecter();
-    echo '
-    <h1>Ajouter un nouvel Role</h1>
-    <form action="index.php?action=AjoutRole" method="post">
-        <label for="RoleJouer_Acteur"> Role : </label>
-        <input type="text" id="RoleJouer_Acteur" name="RoleJouer_Acteur" required placeholder="Taper le Role"><br>
-        <input type="submit" value="Ajouter un nouveau Role">
-    </form> ';
-}
 
 //AJOUT ACTEUR
 public function AjoutRole() {
@@ -455,31 +240,10 @@ public function AjoutRole() {
         $reqAjoutRole = $pdo->prepare("INSERT INTO role(RoleJouer_Acteur)VALUES (?)");
         $reqAjoutRole->execute([$NouveauRole]);
         echo "Role ajouté avec succès !";
-    } else {
-        echo "Role NON AJOUTER ! Erreur dans l'ajout d'un Role !";
-    }
+    } 
+    require "view/role/FormRole.php"; 
 }
 
-
-
-
-
-
-
-
-
-
-//FORMULAIRE GENRE
-public function FormGenre() {
-    $pdo = Connect::seConnecter();
-    echo '
-    <h1>Ajouter un nouveau Genre</h1>
-    <form action="index.php?action=AjoutGenre" method="post">
-        <label for="Libelle_Film_Categorie"> Genre : </label>
-        <input type="text" id="Libelle_Film_Categorie" name="Libelle_Film_Categorie" required placeholder="Taper le Genre"><br>
-        <input type="submit" value="Ajouter un nouveau Genre">
-    </form> ';
-}
 
 //AJOUT GENRE
 public function AjoutGenre() {
@@ -491,9 +255,8 @@ public function AjoutGenre() {
             "INSERT INTO categorie(Libelle_Film_Categorie)VALUES (?)");
         $reqAjoutGenre->execute([$NouveauGenre]);
         echo "Genre ajouté avec succès !";
-    } else {
-        echo "Genre NON AJOUTER ! Erreur dans l'ajout d'un Genre !";
-    }
+    } 
+    require "view/genre/FormGenre.php"; 
 }
 
 
@@ -516,10 +279,10 @@ public function AjoutGenre() {
 
 
 
-
-
-
 }
+
+
+
 
 
 ?>

@@ -6,15 +6,15 @@ use Model\Connect;
 
 $pdo = Connect::seConnecter();
 
-$filmographieRealisateur = $pdo->query("SELECT * FROM Realisateur");
-
-echo "<p> Il y a " . $filmographieRealisateur->rowCount() . " Realisateur </p>";
+echo "<p> Il y a " . count($realisateurList) . " Realisateur(s) </p>";
 
 echo "<ul>";
-foreach ($filmographieRealisateur->fetchAll() as $realisateur) {
-    
-    echo "<li><a href='index.php?action=detailRealisateur&id=" . $realisateur['ID_Realisateur'] . "'>" . $realisateur['Nom_Realisateur'] . " " . $realisateur['Prenom_Realisateur'] . "</a></li>";
-
+foreach ($realisateurList as $realisateur) {
+    echo "<li><a href='index.php?action=detailRealisateur&id=" . 
+    $realisateur['ID_Realisateur'] . "'>" . 
+    $realisateur['Nom_Realisateur'] . " " . 
+    $realisateur['Prenom_Realisateur'] . 
+    "</a></li>";
 }
 echo "</ul>";
 

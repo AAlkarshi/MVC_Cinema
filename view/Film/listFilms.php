@@ -17,32 +17,19 @@
 		<?php
 			foreach ($requete->fetchAll() as $film) {  ?>
 			<tr>
-			
 				<td> <a href="index.php?action=detailFilm&id=<?= $film['ID_Films'] ?>"> <?= $film["Titre_Film"] ?></a></td>
 
-					<td> <?= $film["AnneeSortieFilmOrdre"] ?> </td>
+				<td> <?= $film["AnneeSortieFilmOrdre"] ?> </td>
 				</tr>
-			<?php } ?>
-
-
-
-			
+			<?php } ?>	
 	</tbody>
-	
 </table>
 
 
 <?php
-
-$titre = "Listes des films";
+$titre = "Listes des Films";
 $titre_secondaire = "Listes des films";
 $contenu = ob_get_clean();
 require "view/template.php";
-
-
-
-
-
-
-
+?>
 

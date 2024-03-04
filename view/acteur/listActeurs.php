@@ -6,13 +6,10 @@ use Model\Connect;
 
 $pdo = Connect::seConnecter();
 
-$requete = $pdo->query("SELECT * FROM acteurs");
-
-echo "<p> Il y a " . $requete->rowCount() . " Acteurs </p>";
+echo "<p> Il y a " . count($acteurs) . " Acteurs </p>";
 
 echo "<ul>";
-foreach ($requete->fetchAll() as $acteur) {
-    
+foreach ($acteurs as $acteur) {
     echo "<li><a href='index.php?action=detailActeur&id=" . $acteur['ID_Acteur'] . "'>" . $acteur['Nom_Acteur'] . " " . $acteur['Prenom_Acteur'] . "</a></li>";
 }
 echo "</ul>";

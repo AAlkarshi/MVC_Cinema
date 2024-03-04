@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Détail des Acteurs</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+<?php
+ob_start();
+
+require_once 'model/Connect.php'; 
+use Model\Connect;
+
+$pdo = Connect::seConnecter();
+?>
 
 <div class="container">
     <h1>Détail de l'Acteur</h1>
@@ -34,5 +34,9 @@
    
 </div>
 
-</body>
-</html>
+<?php
+$titre = "Detail de l' Acteur";
+$titre_secondaire = "Detail de l'acteur";
+$contenu = ob_get_clean();
+require "view/template.php";
+?>
