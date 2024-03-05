@@ -1,11 +1,3 @@
-<?php
-ob_start();
-require_once 'model/Connect.php'; 
-use Model\Connect;
-
-$pdo = Connect::seConnecter();
-?>
-
 <form action="index.php?action=AjoutFilm" method="post">
     <label for="Titre_Film">Titre:</label>
     <input type="text" id="Titre_Film" name="Titre_Film" required placeholder="Taper le Nom du Film"><br>
@@ -32,22 +24,6 @@ $pdo = Connect::seConnecter();
 </form>
 
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $titreFilm = filter_input(INPUT_POST, 'Titre_Film', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $anneeSortieFilm = filter_input(INPUT_POST, 'AnneeSortieFilm', FILTER_VALIDATE_INT);
-    $dureeFilm = filter_input(INPUT_POST, 'DureeFilm', FILTER_VALIDATE_INT);
-    $resumeFilm = filter_input(INPUT_POST, 'Resume_Film', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $noteFilm = filter_input(INPUT_POST, 'Note_Film', FILTER_VALIDATE_FLOAT);
-    $afficheFilm = filter_input(INPUT_POST, 'Affiche_Film', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $idRealisateur = filter_input(INPUT_POST, 'ID_Realisateur', FILTER_VALIDATE_INT);
-
-if ($anneeSortieFilm === false || $dureeFilm === false || $noteFilm === false || $idRealisateur === false) {
-        echo "Un ou plusieurs champs ont été mal remplis.";
-    } else {
-        echo "Film ajouté avec succès.";
-    }
-}
-
 $titre = "Formulaires Ajout des Films";
 $titre_secondaire = "Ajout des Films";
 $contenu = ob_get_clean();

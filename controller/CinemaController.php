@@ -165,13 +165,14 @@ public function listRole() {
 public function AjoutFilm() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo = Connect::seConnecter();
-        $TitreFilm = $_POST['Titre_Film'] ?? ''; 
-        $AnneeSortieFilm = $_POST['AnneeSortieFilm'] ?? '';
-        $DureeFilm = $_POST['DureeFilm'] ?? '';
-        $ResumeFilm = $_POST['Resume_Film'] ?? ''; 
-        $NoteFilm = $_POST['Note_Film'] ?? ''; 
-        $AfficheFilm = $_POST['Affiche_Film'] ?? ''; 
-        $ID_Realisateur = $_POST['ID_Realisateur'] ?? '';
+
+         $TitreFilm = filter_input(INPUT_POST, 'Titre_Film') ?? ''; 
+        $AnneeSortieFilm = filter_input(INPUT_POST, 'AnneeSortieFilm') ?? '';
+        $DureeFilm = filter_input(INPUT_POST, 'DureeFilm') ?? '';
+        $ResumeFilm = filter_input(INPUT_POST, 'Resume_Film') ?? ''; 
+        $NoteFilm = filter_input(INPUT_POST, 'Note_Film') ?? ''; 
+        $AfficheFilm = filter_input(INPUT_POST, 'Affiche_Film') ?? ''; 
+        $ID_Realisateur = filter_input(INPUT_POST, 'ID_Realisateur') ?? '';
 
         $reqAjoutFilm = $pdo->prepare("INSERT INTO films 
             (Titre_Film, AnneeSortieFilm, DureeFilm, Resume_Film, 
@@ -192,10 +193,11 @@ public function AjoutFilm() {
 public function AjoutActeur() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo = Connect::seConnecter();
-        $NomActeur = $_POST['Nom_Acteur'] ?? ''; 
-        $PrenomActeur = $_POST['Prenom_Acteur'] ?? '';
-        $SexeActeur = $_POST['Sexe_Acteur'] ?? '';
-        $DateNaissanceActeur = $_POST['DateNaissance_Acteur'] ?? ''; 
+
+        $NomActeur = filter_input(INPUT_POST, 'Nom_Acteur') ?? ''; 
+        $PrenomActeur = filter_input(INPUT_POST, 'Prenom_Acteur') ?? '';
+        $SexeActeur = filter_input(INPUT_POST, 'Sexe_Acteur') ?? '';
+        $DateNaissanceActeur = filter_input(INPUT_POST,'DateNaissance_Acteur') ?? '';
 
         $reqAjoutActeur = $pdo->prepare("INSERT INTO acteurs 
             (Nom_Acteur, Prenom_Acteur, Sexe_Acteur, DateNaissance_Acteur)
@@ -208,14 +210,15 @@ public function AjoutActeur() {
 }
 
 
-//AJOUT ACTEUR
+
+//AJOUT REALISATEUR
 public function AjoutRealisateur() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo = Connect::seConnecter();
-        $NomRealisateur = $_POST['Nom_Realisateur'] ?? ''; 
-        $PrenomRealisateur = $_POST['Prenom_Realisateur'] ?? '';
-        $SexeRealisateur = $_POST['Sexe_Realisateur'] ?? '';
-        $DateNaissanceRealisateur = $_POST['DateNaissance_Realisateur'] ?? ''; 
+        $NomRealisateur = filter_input(INPUT_POST, 'Nom_Realisateur') ?? ''; 
+        $PrenomRealisateur = filter_input(INPUT_POST, 'Prenom_Realisateur') ?? '';
+        $SexeRealisateur = filter_input(INPUT_POST, 'Sexe_Realisateur') ?? '';
+        $DateNaissanceRealisateur = filter_input(INPUT_POST, 'DateNaissance_Realisateur') ?? ''; 
        
 
         $reqAjoutRealisateur = $pdo->prepare("INSERT INTO Realisateur 
@@ -230,11 +233,11 @@ public function AjoutRealisateur() {
 }
 
 
-//AJOUT ACTEUR
+//AJOUT ROLE
 public function AjoutRole() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo = Connect::seConnecter();
-        $NouveauRole = $_POST['RoleJouer_Acteur'] ?? '';  
+        $NouveauRole = filter_input(INPUT_POST, 'RoleJouer_Acteur') ?? '';
        
         $reqAjoutRole = $pdo->prepare("INSERT INTO role(RoleJouer_Acteur)VALUES (?)");
         $reqAjoutRole->execute([$NouveauRole]);
@@ -248,7 +251,7 @@ public function AjoutRole() {
 public function AjoutGenre() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo = Connect::seConnecter();
-        $NouveauGenre = $_POST['Libelle_Film_Categorie'] ?? '';  
+        $NouveauGenre = filter_input(INPUT_POST, 'Libelle_Film_Categorie') ?? '';   
        
         $reqAjoutGenre = $pdo->prepare(
             "INSERT INTO categorie(Libelle_Film_Categorie)VALUES (?)");

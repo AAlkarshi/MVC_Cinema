@@ -1,11 +1,3 @@
-<?php
-ob_start();
-require_once 'model/Connect.php'; 
-use Model\Connect;
-
-$pdo = Connect::seConnecter();
-?>
-
 <form action="index.php?action=AjoutRealisateur" method="post">
     <label for="Nom_Realisateur">Nom du Réalisateur : </label>
     <input type="text" id="Nom_Realisateur" name="Nom_Realisateur" required placeholder="Taper le nom du Réalisateur"><br>
@@ -23,20 +15,6 @@ $pdo = Connect::seConnecter();
 </form>
 
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
-    $nomRealisateur = filter_input(INPUT_POST, 'Nom_Realisateur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $prenomRealisateur = filter_input(INPUT_POST, 'Prenom_Realisateur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $sexeRealisateur = filter_input(INPUT_POST, 'Sexe_Realisateur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $dateNaissanceRealisateur = filter_input(INPUT_POST, 'DateNaissance_Realisateur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-    if (!$nomRealisateur || !$prenomRealisateur || !$sexeRealisateur || !$dateNaissanceRealisateur) {
-        echo "Un ou plusieurs champs sont invalides.";
-    } else {
-        echo "Ce Réalisateur à été rajouté.";
-    }
-}
-
 $titre = "Formulaires Ajout des Réalisateurs";
 $titre_secondaire = "Ajout des Réalisateurs";
 $contenu = ob_get_clean();

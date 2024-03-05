@@ -1,14 +1,4 @@
-<?php
-ob_start();
-
-require_once 'model/Connect.php'; 
-use Model\Connect;
-
-$pdo = Connect::seConnecter();
-?>
-
-<div class="container">
-        <div>
+<div>
             <h2>Informations de l'Acteur</h2>
 
             <p>Nom : <?= $filmographie[0]['Nom_Acteur'] ?></p>
@@ -27,9 +17,8 @@ $pdo = Connect::seConnecter();
                     </li>
                 <?php endforeach; ?>
             </ul>
-        </div>
-   
 </div>
+   
 
 <?php
 $titre = "Detail de l' Acteur";

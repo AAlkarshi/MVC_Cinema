@@ -1,13 +1,4 @@
-<?php
-ob_start();
-
-require_once 'model/Connect.php'; 
-use Model\Connect;
-
-$pdo = Connect::seConnecter();
-?>
-
-<div class="container">
+<div>
     <h1>Détail des Films selon leurs genres</h1>
 
         <?php foreach ($filmographieRole as $role): ?>

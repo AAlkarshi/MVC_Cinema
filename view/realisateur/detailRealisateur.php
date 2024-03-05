@@ -1,11 +1,3 @@
-<?php
-ob_start();
-
-require_once 'model/Connect.php'; 
-use Model\Connect;
-
-$pdo = Connect::seConnecter();
-?>
     <div>
         <h1>Informations du Réalisateur</h1>
         <p>Nom: <?= $infosRealisateur['Nom_Realisateur'] ?></p>

@@ -1,10 +1,5 @@
 <?php
-ob_start();
 
-require_once 'model/Connect.php'; 
-use Model\Connect;
-
-$pdo = Connect::seConnecter();
 
 echo "<p> Il y a " . count($listRole) . " Roles </p>"; 
 echo "<ul>";

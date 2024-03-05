@@ -1,12 +1,4 @@
-<?php
-ob_start();
 
-require_once 'model/Connect.php'; 
-use Model\Connect;
-
-$pdo = Connect::seConnecter();
-?>
-    
 <div class="container">
     <h1 style="display: flex; justify-content: center; width: 100%; flex-direction: row;">Détail du film</h1>
    

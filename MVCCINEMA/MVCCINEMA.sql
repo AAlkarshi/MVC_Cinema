@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `acteurs` (
   `Sexe_Acteur` varchar(5) NOT NULL,
   `DateNaissance_Acteur` date NOT NULL,
   PRIMARY KEY (`ID_Acteur`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.acteurs : ~16 rows (environ)
 /*!40000 ALTER TABLE `acteurs` DISABLE KEYS */;
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `categorie` (
   `ID_Categorie` int(11) NOT NULL AUTO_INCREMENT,
   `Libelle_Film_Categorie` varchar(255) NOT NULL,
   PRIMARY KEY (`ID_Categorie`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.categorie : ~6 rows (environ)
 /*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
@@ -62,8 +62,7 @@ INSERT INTO `categorie` (`ID_Categorie`, `Libelle_Film_Categorie`) VALUES
 	(2, 'Science-Fiction'),
 	(3, 'Aventure'),
 	(4, 'Policier'),
-	(5, 'Biopic'),
-	(6, 'Horreur');
+	(5, 'Biopic');
 /*!40000 ALTER TABLE `categorie` ENABLE KEYS */;
 
 -- Listage de la structure de la table cinema. films
@@ -79,30 +78,30 @@ CREATE TABLE IF NOT EXISTS `films` (
   PRIMARY KEY (`ID_Films`),
   KEY `ID_Realisateur` (`ID_Realisateur`),
   CONSTRAINT `films_ibfk_1` FOREIGN KEY (`ID_Realisateur`) REFERENCES `realisateur` (`ID_Realisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.films : ~19 rows (environ)
 /*!40000 ALTER TABLE `films` DISABLE KEYS */;
 INSERT INTO `films` (`ID_Films`, `Titre_Film`, `AnneeSortieFilm`, `DureeFilm`, `Resume_Film`, `Note_Film`, `Affiche_Film`, `ID_Realisateur`) VALUES
-	(1, 'ForrestGump', 1994, 142, 'Sur un banc à Savannah en Géorgie, Forrest Gump attend le bus. Il raconte sa vie à ses compagnons. \r\nSes capacités intellectuelles ne le destinaient pas à de grandes choses.\r\nAlors qu il raconte tous les grands événements de l Histoire de son pays.\r\n', 5, 'ForrestGump.jpg', 1),
-	(2, 'BatmanDarkKnight', 2008, 152, 'Batman est déterminé à éradiquer le crime qui sème la terreur en ville. \r\nEpaulé par Jim Gordon et par le procureur de Gotham,Harvey Dent. \r\nLa collaboration des 3 hommes est efficace et porte ses fruits jusquà ce quun criminel vienne. \r\n', 4, 'BatmanDarkKnight.jpg', 2),
-	(3, 'LesAffranchis', 1990, 146, 'Les Affranchis raconte l\'ascension et la chute d\'Henry Hill dans la mafia,\r\nexplorant la loyauté,le crime et les conséquences,dans un monde de violence et de corruption.', 4, 'LesAffranchis.jpg', 3),
-	(4, 'LordOfWar', 2005, 122, 'Lord of War suit Yuri Orlov, un immigré ukrainien devenu trafiquant d\'armes, \r\nexplorant les impacts de ses actes sur sa famille et le monde, \r\nà travers des thèmes de corruption, violence et morale.', 5, 'LordOfWar.jpg', 5),
-	(5, 'TheRevenant', 2016, 156, 'Durant une expédition dans une Amérique sauvage, le trappeur Hugh Glass est attaqué par un ours et laissé pour mort par sa propre équipe. \r\nIl endure une souffrance inimaginable ainsi que la trahison de John Fitzgerald. \r\nIl doit tout faire pour survivre.', 4, 'TheRevenant.jpg', 4),
+	(1, 'Forrest Gump', 1994, 142, 'Sur un banc à Savannah en Géorgie, Forrest Gump attend le bus. Il raconte sa vie à ses compagnons. \r\nSes capacités intellectuelles ne le destinaient pas à de grandes choses.\r\nAlors qu il raconte tous les grands événements de l Histoire de son pays.\r\n', 5, 'ForrestGump.jpg', 1),
+	(2, 'Batman Dark Knight', 2008, 152, 'Batman est déterminé à éradiquer le crime qui sème la terreur en ville. \r\nEpaulé par Jim Gordon et par le procureur de Gotham,Harvey Dent. \r\nLa collaboration des 3 hommes est efficace et porte ses fruits jusquà ce quun criminel vienne. \r\n', 4, 'BatmanDarkKnight.jpg', 2),
+	(3, 'Les Affranchis', 1990, 146, 'Les Affranchis raconte l\'ascension et la chute d\'Henry Hill dans la mafia,\r\nexplorant la loyauté,le crime et les conséquences,dans un monde de violence et de corruption.', 4, 'LesAffranchis.jpg', 3),
+	(4, 'Lord Of War', 2005, 122, 'Lord of War suit Yuri Orlov, un immigré ukrainien devenu trafiquant d\'armes, \r\nexplorant les impacts de ses actes sur sa famille et le monde, \r\nà travers des thèmes de corruption, violence et morale.', 5, 'LordOfWar.jpg', 5),
+	(5, 'The Revenant', 2016, 156, 'Durant une expédition dans une Amérique sauvage, le trappeur Hugh Glass est attaqué par un ours et laissé pour mort par sa propre équipe. \r\nIl endure une souffrance inimaginable ainsi que la trahison de John Fitzgerald. \r\nIl doit tout faire pour survivre.', 4, 'TheRevenant.jpg', 4),
 	(6, 'Leon', 1994, 110, '\r\nLeon est un tueur à gages solitaire qui forme un lien avec Mathilda,\r\nune jeune fille dont la famille a été tuée par un policier corrompu.\r\nLeon prend Mathilda sous son aile pour l aider à chercher vengeance.', 5, 'Leon.jpg', 6),
-	(7, 'HarryPotteretlaCoupedeFeu', 2005, 157, 'Harry Potter et la Coupe de Feu,\r\nHarry est sélectionné pour le Tournoi des Trois Sorciers à Poudlard.\r\nIl affronte des défis mortels,\r\ntandis que le retour de Voldemort menace le monde des sorciers.', 5, 'HarryPotterEtLaCoupedeFeu.jpg', 7),
-	(8, 'OceanEleven', 2001, 116, 'Danny Ocean et son équipe planifient un audacieux cambriolage de 3 casinos à Las Vegas en une seule nuit.', 3, 'OceanEleven.jpg', 8),
-	(9, 'WarDogs', 2016, 114, 'War Dogs suit l histoire vraie de 2 amis qui deviennent des marchands d armes pour le gouvernement américain,\r\nmais leur incompétence et leur cupidité les entraînent dans des situations de plus en plus dangereuses.', 5, 'WarDogs.jpg', 9),
-	(10, 'BoneCollector', 1999, 118, 'The Bone Collector suit un quadriplégique expert en médecine légale et son assistante \r\nalors qu ils tentent de résoudre une série de meurtres laissés par un tueur en série a New York,\r\nen utilisant leur intelligence et des indices.', 5, 'BoneCollector.jpg', 10),
+	(7, 'Harry Potter et la Coupe de Feu', 2005, 157, 'Harry Potter et la Coupe de Feu,\r\nHarry est sélectionné pour le Tournoi des Trois Sorciers à Poudlard.\r\nIl affronte des défis mortels,\r\ntandis que le retour de Voldemort menace le monde des sorciers.', 5, 'HarryPotterEtLaCoupedeFeu.jpg', 7),
+	(8, 'Ocean Eleven', 2001, 116, 'Danny Ocean et son équipe planifient un audacieux cambriolage de 3 casinos à Las Vegas en une seule nuit.', 3, 'OceanEleven.jpg', 8),
+	(9, 'War Dogs', 2016, 114, 'War Dogs suit l histoire vraie de 2 amis qui deviennent des marchands d armes pour le gouvernement américain,\r\nmais leur incompétence et leur cupidité les entraînent dans des situations de plus en plus dangereuses.', 5, 'WarDogs.jpg', 9),
+	(10, 'Bone Collector', 1999, 118, 'The Bone Collector suit un quadriplégique expert en médecine légale et son assistante \r\nalors qu ils tentent de résoudre une série de meurtres laissés par un tueur en série a New York,\r\nen utilisant leur intelligence et des indices.', 5, 'BoneCollector.jpg', 10),
 	(11, 'Lucy', 2014, 90, 'Lucy est l\'histoire d\'une femme qui gagne des pouvoirs surhumains après l exposition à une drogue,\r\nmenant à une quête de vengeance et de découverte sur les capacités du cerveau humain.', 3, 'Lucy.jpg', 6),
 	(12, 'Oppenheimer', 2023, 180, 'Oppenheimer ,le physicien américain surnommé le père de la bombe atomique. \r\nLe film explore sa contribution au Projet Manhattan, \r\nle développement de la bombe nucléaire pendant la 2eme Guerre mondiale, \r\net ses répercussions personnelles et historiques.', 4, 'Oppenheimer.jpg', 2),
 	(13, 'Tenet', 2020, 150, 'Tenet suit un agent secret qui manipule le flux du temps pour prévenir une 3ème Guerre mondiale..', 4, 'Tenet.jpg\r\n', 2),
-	(14, 'LeLoupDeWallStreet', 2013, 179, 'L\'ascension et la chute d\'un courtier ambitieux,\r\nmarquées par la corruption dans le monde financier des années 90', 5, 'LeLoupDeWalLStreet.jpg', 3),
-	(15, 'VeryBadTrip', 2009, 140, '4 amis à Vegas pour un enterrement de vie de garçon se réveillent sans souvenir de la nuit précédente,\r\ncherchant à retrouver le marié disparu', 5, 'VeryBadTrip.jpg', 9),
+	(14, 'Le Loup De Wall Street', 2013, 179, 'L\'ascension et la chute d\'un courtier ambitieux,\r\nmarquées par la corruption dans le monde financier des années 90', 5, 'LeLoupDeWalLStreet.jpg', 3),
+	(15, 'Very Bad Trip', 2009, 140, '4 amis à Vegas pour un enterrement de vie de garçon se réveillent sans souvenir de la nuit précédente,\r\ncherchant à retrouver le marié disparu', 5, 'VeryBadTrip.jpg', 9),
 	(18, 'Flight', 2012, 138, 'Un pilote sauve son vol d\'un désastre,\r\nmais son héroïsme est remis en question à cause de son addiction.', 3, 'Flight.jpg', 1),
-	(19, 'LeTerminal', 2004, 128, 'Un homme se retrouve bloqué dans un aéroport new-yorkais\r\nquand son pays est effacé de la carte, le rendant apatride.', 4, 'leterminal.jpg', 5),
+	(19, 'Le Terminal', 2004, 128, 'Un homme se retrouve bloqué dans un aéroport new-yorkais\r\nquand son pays est effacé de la carte, le rendant apatride.', 4, 'leterminal.jpg', 5),
 	(20, 'Joker', 2019, 122, 'Joker,ennemi emblématique de Batman.Joaquin Phoenix incarne Arthur Fleck,\r\nun comédien raté qui se transforme en un criminel anarchiste à Gotham City \r\naprès avoir été rejeté et maltraité par la société.', 4, 'joker.jpg', 9),
-	(21, 'SeulAuMonde', 2000, 143, 'un employé de FedEx qui survit à un crash d\'avion et se retrouve échoué sur une île déserte. Le film explore sa lutte pour survivre et maintenir sa santé mentale, avec pour seul compagnon un ballon de volley nommé Wilson.', 5, 'SeulAuMonde.jpg', 1);
+	(21, 'Seul Au Monde', 2000, 143, 'un employé de FedEx qui survit à un crash d\'avion et se retrouve échoué sur une île déserte. Le film explore sa lutte pour survivre et maintenir sa santé mentale, avec pour seul compagnon un ballon de volley nommé Wilson.', 5, 'SeulAuMonde.jpg', 1);
 /*!40000 ALTER TABLE `films` ENABLE KEYS */;
 
 -- Listage de la structure de la table cinema. jouer
@@ -185,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `realisateur` (
   `Sexe_Realisateur` varchar(5) NOT NULL,
   `DateNaissance_Realisateur` date NOT NULL,
   PRIMARY KEY (`ID_Realisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.realisateur : ~14 rows (environ)
 /*!40000 ALTER TABLE `realisateur` DISABLE KEYS */;
@@ -210,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `role` (
   `ID_Role` int(11) NOT NULL AUTO_INCREMENT,
   `RoleJouer_Acteur` varchar(255) NOT NULL,
   PRIMARY KEY (`ID_Role`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 -- Listage des données de la table cinema.role : ~20 rows (environ)
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
