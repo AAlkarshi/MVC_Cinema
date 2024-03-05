@@ -10,7 +10,8 @@ $pdo = Connect::seConnecter();
 <div class="container">
     <h1 style="display: flex; justify-content: center; width: 100%; flex-direction: row;">Détail du film</h1>
    
-    <img class="IMGDetailFilm" src="<?= 'public/img/'.urlencode($reqDetailFilm['Affiche_Film']) .'.jpg'; ?>" style="display: block; margin-left: auto; margin-right: auto;">
+    <img class="IMGDetailFilm" src="<?= 'public/img/'.urlencode(trim($reqDetailFilm['Affiche_Film'])); ?>" style="display: block; margin-left: auto; margin-right: auto;">
+
 
     <h2 class="DetailCentre"><?= $reqDetailFilm['Titre_Film']; ?></h2>
     <p class="DetailCentre">Année de sortie: <?= $reqDetailFilm['AnneeSortieFilm']; ?></p>
