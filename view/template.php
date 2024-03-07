@@ -20,6 +20,7 @@
 						<a href="index.php?action=listGenre">Genres</a>
 						<a href="index.php?action=listRole">Rôles</a>
 						<a href="index.php?action=AjoutFilm">Ajout Films</a>
+						<a href="index.php?action=UpdateFilm">MAJ Films</a>
 						<a href="index.php?action=FormActeur">Ajout Acteurs</a>
 						<a href="index.php?action=FormRealisateur">Ajout Realisateurs</a>
 						<a href="index.php?action=FormGenre">Ajout Genre</a>

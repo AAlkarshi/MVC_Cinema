@@ -22,6 +22,14 @@
 				<td> <?= $film["AnneeSortieFilmOrdre"] ?> </td>
 				</tr>
 			<?php } ?>	
+
+
+
+
+
+
+
+			
 	</tbody>
 </table>
 

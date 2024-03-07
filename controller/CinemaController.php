@@ -6,7 +6,7 @@ use Model\Connect;
 class CinemaController {
 	// Affiche ID FILM , TITRE ET DATE DE SORTIE
 	public function listFilms() {
-		//CONNEXIONA LA BDD
+		//CONNEXION A LA BDD
 		$pdo = Connect::seConnecter();
 		$requete =$pdo->query("SELECT ID_Films, Titre_Film, AnneeSortieFilm AS AnneeSortieFilmOrdre
         FROM films
@@ -15,91 +15,123 @@ class CinemaController {
 	}
 
 
-//DETAIL ACTEUR
-public function detailActeur($id) {
-    $pdo = Connect::seConnecter();
-    $requeteFilmographie = $pdo->prepare("
-    SELECT films.ID_Films, Titre_Film, RoleJouer_Acteur , Nom_Acteur, Prenom_Acteur , 
-    DATE_FORMAT(DateNaissance_Acteur,'%d-%m-%Y') AS DateNaissance_ActeurFormate
-    FROM jouer 
-    INNER JOIN films ON jouer.ID_Films = films.ID_Films 
-    INNER JOIN role ON jouer.ID_Role = role.ID_Role 
-    INNER JOIN acteurs ON jouer.ID_Acteur = acteurs.ID_Acteur 
-    WHERE jouer.ID_Acteur = :id");
-    $requeteFilmographie->execute(['id' => $id]);
-    $filmographie = $requeteFilmographie->fetchAll(); 
-    require "view/acteur/detailActeur.php";
-}
 
-//DETAIL LISTE ACTEURS
-public function listActeurs() {
+
+
+
+
+    //SUPPRESSION D'UN FILM
+public function DeleteFilm($id) {
     $pdo = Connect::seConnecter();
-    $requete = $pdo->query("SELECT ID_Acteur,Nom_Acteur,Prenom_Acteur FROM acteurs");
-    $acteurs = $requete->fetchAll();
-    require "view/acteur/listActeurs.php";
+    $requetedeletefilm = $pdo->prepare("DELETE FROM films WHERE ID_films = :id");
+    $requetedeletefilm->execute(['id' => $id]);
+    header('Location: index.php?action=listFilms');
+    exit();
 }
 
 
-// DETAIL FILM   JUSTE
+
+    //MISE A JOUR D'UN FILM
+public function UpdateFilm($id) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+       
+        $titreFilm = $_POST['Titre_Film'];
+        $anneeSortieFilm = $_POST['AnneeSortieFilm'];
+        $dureeFilm = $_POST['DureeFilm'];
+        $resumeFilm = $_POST['Resume_Film'];
+        $noteFilm = $_POST['Note_Film'];
+        $afficheFilm = $_POST['Affiche_Film'];
+        $idRealisateur = $_POST['ID_Realisateur'];
+
+        
+        $pdo = Connect::seConnecter();
+
+        $requeteUpdateFilm = $pdo->prepare("UPDATE films SET 
+            Titre_Film = :Titre_Film,
+            AnneeSortieFilm = :AnneeSortieFilm,
+            DureeFilm = :DureeFilm,
+            Resume_Film = :Resume_Film,
+            Note_Film = :Note_Film,
+            Affiche_Film = :Affiche_Film,
+            ID_Realisateur = :ID_Realisateur
+            WHERE ID_Films = :id");
+
+        // Exécution requête
+        $requeteUpdateFilm->execute([
+            'Titre_Film' => $titreFilm,
+            'AnneeSortieFilm' => $anneeSortieFilm,
+            'DureeFilm' => $dureeFilm,
+            'Resume_Film' => $resumeFilm,
+            'Note_Film' => $noteFilm,
+            'Affiche_Film' => $afficheFilm,
+            'ID_Realisateur' => $idRealisateur,
+            'id' => $id
+        ]);
+        echo "Le film a bien été mis à jour.";;
+    } else {
+        require "view/film/UpdateFilm.php";
+    }
+}
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+// DETAIL FILM 
+//Recupere TT les INFOS FILMS et REALISATEUR 
 	public function detailFilm($id) {
     $pdo = Connect::seConnecter();
-    $requeteFilm = $pdo->prepare("SELECT * FROM films WHERE films.ID_Films = :id"); 
-    $requeteFilm->execute(['id' => $id]); 
+    $requeteFilm = $pdo->prepare("SELECT films.ID_Films, films.Titre_Film, 
+    films.AnneeSortieFilm, films.DureeFilm,films.Note_Film, films.Resume_Film, films.Affiche_Film,
+    realisateur.Nom_Realisateur, realisateur.Prenom_Realisateur
+    FROM films
+    INNER JOIN realisateur ON films.ID_Realisateur = realisateur.ID_Realisateur
+    WHERE films.ID_Films = :id"); 
+    $requeteFilm->execute(['id' => $id]);
+
+    //fetch mettre en tableau que la première réponse à la requête
     $reqDetailFilm = $requeteFilm->fetch();
 
-    $reqDetailFilmo = $pdo->prepare(
-		"SELECT films.ID_Films, films.Titre_Film, 
-        films.AnneeSortieFilm, films.DureeFilm,films.Note_Film, films.Resume_Film,
-        realisateur.Nom_Realisateur, realisateur.Prenom_Realisateur, 
-        acteurs.Nom_Acteur , acteurs.Prenom_Acteur,
+   
+    $castingFilm = $pdo->prepare(
+		"SELECT acteurs.Nom_Acteur , acteurs.Prenom_Acteur,
         role.RoleJouer_Acteur,
         categorie.Libelle_Film_Categorie
         FROM films
         INNER JOIN jouer ON films.ID_Films = jouer.ID_Films
         INNER JOIN role ON jouer.ID_Role = role.ID_Role
         INNER JOIN acteurs ON jouer.ID_Acteur = acteurs.ID_Acteur
-        INNER JOIN realisateur ON films.ID_Realisateur = realisateur.ID_Realisateur
+
+        /* LEFT JOIN liste tt les éléments de la table de gauche */
         LEFT JOIN posseder ON films.ID_Films = posseder.ID_Films
         LEFT JOIN categorie ON posseder.ID_Categorie = categorie.ID_Categorie
         WHERE films.ID_Films = :id");
-    $reqDetailFilmo->execute(['id' => $id]);
-    $filmographieFilm = $reqDetailFilmo->fetchAll();
+
+    $castingFilm->execute(['id' => $id]);
+    // fetchAll  met la totalité des réponses
+
+    $filmographieFilm = $castingFilm->fetchAll();
     require "view/film/detailFilm.php";
+    //require va charger un fichier php. Si fichier n'existe pas une erreur sera affiché
+    //include charge un fichier php. Si il existe pas,aucune erreur ne sera levée
 }
 
 
-// DETAIL REALISATEUR
-public function detailRealisateur($id) {
-    $pdo = Connect::seConnecter();
-    $requeteInfosRealisateur = $pdo->prepare("
-    SELECT Nom_Realisateur, Prenom_Realisateur, DATE_FORMAT
-    (DateNaissance_Realisateur,'%d-%m-%Y') AS DateNaissance_RealisateurFormate 
-    FROM Realisateur 
-    WHERE Realisateur.ID_Realisateur = :id"
-);
-    $requeteInfosRealisateur->execute(['id' => $id]);
-    $infosRealisateur = $requeteInfosRealisateur->fetch(); 
-
-    
-    $requeteFilmographie = $pdo->prepare("
-        SELECT films.ID_Films ,films.Titre_Film, films.AnneeSortieFilm  AS AnneeSortieFilmTrie
-        FROM films 
-        WHERE films.ID_Realisateur = :id
-        ORDER BY AnneeSortieFilmTrie DESC"
-    );
-    $requeteFilmographie->execute(['id' => $id]);
-    $filmographieRealisateur = $requeteFilmographie->fetchAll();
-    require "view/realisateur/detailRealisateur.php";
-}
 
 
-//DETAIL LISTE REALISATEUR
-public function listRealisateur() {
-    $pdo = Connect::seConnecter();
-    $requeteListRealisateur = $pdo->query("SELECT ID_Realisateur, Nom_Realisateur, Prenom_Realisateur FROM realisateur");
-    $realisateurList = $requeteListRealisateur->fetchAll(); 
-    require "view/realisateur/listRealisateur.php";
-}
+
+
+
 
 
 // DETAIL GENRE
@@ -120,7 +152,6 @@ public function detailGenre($id) {
     require "view/genre/detailGenre.php";
 }
 
-
 //LISTE GENRE
 public function listGenre() {
     $pdo = Connect::seConnecter();
@@ -128,6 +159,37 @@ public function listGenre() {
     $ListGenre = $requeteListGenre->fetchAll(); 
     require "view/genre/listGenre.php";
 }
+
+
+
+
+    //MISE A JOUR D'UN FILM
+    public function UpdateGenre($id) {
+		$pdo = Connect::seConnecter();
+		$requeteupdateGenre =$pdo->prepare("UPDATE categorie SET 
+        ID_Categorie = '?',
+        Libelle_Film_Categorie = '?'
+        WHERE ID_Categorie = :id");
+        //var_dump($requeteupdateGenre);
+           $requeteupdateGenre->execute(['id' => $id]);
+           
+           $reqUpdate = $requetedeletefilm->fetch();
+		require "view/film/UpdateFilm.php";
+	}
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
 
 
 // DETAIL ROLE
@@ -161,12 +223,15 @@ public function listRole() {
 }
 
 
+
+// TOUT LES AJOUTS
+
 //AJOUT FILM
 public function AjoutFilm() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo = Connect::seConnecter();
 
-         $TitreFilm = filter_input(INPUT_POST, 'Titre_Film') ?? ''; 
+        $TitreFilm = filter_input(INPUT_POST, 'Titre_Film') ?? ''; 
         $AnneeSortieFilm = filter_input(INPUT_POST, 'AnneeSortieFilm') ?? '';
         $DureeFilm = filter_input(INPUT_POST, 'DureeFilm') ?? '';
         $ResumeFilm = filter_input(INPUT_POST, 'Resume_Film') ?? ''; 
@@ -189,48 +254,10 @@ public function AjoutFilm() {
 }
 
 
-//AJOUT ACTEUR
-public function AjoutActeur() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $pdo = Connect::seConnecter();
-
-        $NomActeur = filter_input(INPUT_POST, 'Nom_Acteur') ?? ''; 
-        $PrenomActeur = filter_input(INPUT_POST, 'Prenom_Acteur') ?? '';
-        $SexeActeur = filter_input(INPUT_POST, 'Sexe_Acteur') ?? '';
-        $DateNaissanceActeur = filter_input(INPUT_POST,'DateNaissance_Acteur') ?? '';
-
-        $reqAjoutActeur = $pdo->prepare("INSERT INTO acteurs 
-            (Nom_Acteur, Prenom_Acteur, Sexe_Acteur, DateNaissance_Acteur)
-        VALUES (?, ?, ?, ?)");
-
-        $reqAjoutActeur->execute([$NomActeur, $PrenomActeur,$SexeActeur,$DateNaissanceActeur]);
-        echo "Acteur ajouté avec succès !";
-    } 
-    require "view/acteur/FormActeur.php"; 
-}
 
 
 
-//AJOUT REALISATEUR
-public function AjoutRealisateur() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $pdo = Connect::seConnecter();
-        $NomRealisateur = filter_input(INPUT_POST, 'Nom_Realisateur') ?? ''; 
-        $PrenomRealisateur = filter_input(INPUT_POST, 'Prenom_Realisateur') ?? '';
-        $SexeRealisateur = filter_input(INPUT_POST, 'Sexe_Realisateur') ?? '';
-        $DateNaissanceRealisateur = filter_input(INPUT_POST, 'DateNaissance_Realisateur') ?? ''; 
-       
 
-        $reqAjoutRealisateur = $pdo->prepare("INSERT INTO Realisateur 
-            (Nom_Realisateur, Prenom_Realisateur, Sexe_Realisateur, DateNaissance_Realisateur)
-        VALUES (?, ?, ?, ?)");
-
-        $reqAjoutRealisateur->execute([$NomRealisateur, $PrenomRealisateur,$SexeRealisateur,
-            $DateNaissanceRealisateur]);
-        echo "Realisateur ajouté avec succès !";
-    }
-    require "view/realisateur/FormRealisateur.php"; 
-}
 
 
 //AJOUT ROLE
@@ -245,6 +272,15 @@ public function AjoutRole() {
     } 
     require "view/role/FormRole.php"; 
 }
+
+
+
+
+
+
+
+
+
 
 
 //AJOUT GENRE

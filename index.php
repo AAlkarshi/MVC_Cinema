@@ -7,13 +7,16 @@ use Model\Connect;
 $pdo = Connect::seConnecter();
 
 use Controller\CinemaController;
+use Controller\ActeurController;
+use Controller\RealisateurController;
 
 spl_autoload_register(function ($class_name) {
     include $class_name.'.php';
 });
 
-
 $ctrlCinema = new CinemaController();
+$ctrlActeur = new ActeurController();
+$ctrlRealisateur = new RealisateurController();
 
 $id = (isset($_GET["id"])) ? $_GET["id"] : null;
 
@@ -26,18 +29,21 @@ if (isset($_GET["action"])) {
         case "detailFilm":
             $ctrlCinema->detailFilm($id);
             break;
+
+            
         case "listActeurs":
-            $ctrlCinema->listActeurs($id);
+            $ctrlActeur->listActeurs($id);
             break;
         case "detailActeur":
-            $ctrlCinema->detailActeur($id);
+            $ctrlActeur->detailActeur($id);
             break;
         case "detailRealisateur":
-            $ctrlCinema->detailRealisateur($id);
+            $ctrlRealisateur->detailRealisateur($id);
             break;
         case "listRealisateur":
-            $ctrlCinema->listRealisateur($id);
+            $ctrlRealisateur->listRealisateur($id);
             break;
+            
         case "detailGenre":
             $ctrlCinema->detailGenre($id);
             break;
@@ -58,22 +64,23 @@ if (isset($_GET["action"])) {
             $ctrlCinema->AjoutFilm();
         break;
 
+        
         //FORMULAIRE ACTEUR
          case "FormActeur":
-            $ctrlCinema->AjoutActeur($id);
+            $ctrlActeur->AjoutActeur($id);
         break;
         case "AjoutActeur":
-            $ctrlCinema->AjoutActeur();
+            $ctrlActeur->AjoutActeur();
         break;
 
         //FORMULAIRE REALISATEUR
          case "FormRealisateur":
-            $ctrlCinema->AjoutRealisateur($id);
+            $ctrlRealisateur->AjoutRealisateur($id);
         break;
         case "AjoutRealisateur":
-            $ctrlCinema->AjoutRealisateur();
+            $ctrlRealisateur->AjoutRealisateur();
         break;
-
+        
 
         //FORMULAIRE REALISATEUR
          case "FormRole":
@@ -93,17 +100,31 @@ if (isset($_GET["action"])) {
 
         
         case "FormActeur":
-            $ctrlCinema->FormActeur($id);
+            $ctrlActeur->FormActeur($id);
         break;
         case "FormRealisateur":
-            $ctrlCinema->FormRealisateur($id);
+            $ctrlRealisateur->FormRealisateur($id);
         break;
+        
         case "FormGenre":
             $ctrlCinema->FormGenre($id);
         break;
         case "FormRole":
             $ctrlCinema->FormRole($id);
         break;
+
+        //Suppression d'un film
+        case "DeleteFilm":
+            $ctrlCinema->DeleteFilm($id);
+            echo "Ce film à bien été Supprimé ! ";
+        break;
+
+        //Mise à jour d'un film
+        case "UpdateFilm":
+            $ctrlCinema->UpdateFilm($id);
+            echo "Ce film à bien été modifié ! ";
+        break;
+        
         default:
             echo "Action inconnue.";
         break;
@@ -113,6 +134,8 @@ if (isset($_GET["action"])) {
 }
 
 
+
+
 ?>
 
 
@@ -120,3 +143,5 @@ if (isset($_GET["action"])) {
 
 
 
+
+             
